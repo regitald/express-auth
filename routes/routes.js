@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get('/',(req, res)=> res.send('welcome to express'));
 router.use('/config', configRoutes);
-router.use('/api/users', userRoutes);
+router.use('/api/users', aes, userRoutes);
 router.use('/api/roles', aes, roleRoutes);
 
 module.exports = router
