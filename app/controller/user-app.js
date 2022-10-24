@@ -34,8 +34,8 @@ exports.register = async(req,res)=>{
     if (error) res.json({ ErrorMessage: error.details[0].message });
 
     //check users
-    // const emailExist = await User.find({ $or: [ { email: req.body.email }, { username: req.body.username } ]});
-    // if(emailExist) return res.status(400).send('email or username already exist');
+    const emailExist = await User.find({ $or: [ { email: req.body.email }, { username: req.body.username } ]});
+    if(emailExist) return res.status(400).send('email or username already exist');
 
     //hash password
     const salt = await bcrypt.genSalt(10);
@@ -72,7 +72,6 @@ exports.login = async(req,res)=>{
     if(!validPass) return res.status(400).send('invalid password');
 
     //generate token
-    // const token = jwt.sign(JSON.stringify({_id:user._id}), config.security.jwt)
     const token = generateJwt.generate(user._id)
     
     return res.status(200).json({ 
